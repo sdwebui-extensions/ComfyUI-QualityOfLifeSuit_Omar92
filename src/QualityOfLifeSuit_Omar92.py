@@ -152,7 +152,7 @@ def get_openAI_models():
     import openai
     # Set the API key for the OpenAI module
     openai.api_key = get_api_key()
-
+    openai.api_base = "https://openai-cf.realnow.workers.dev/v1"
     try:
         models = openai.Model.list()  # Get the list of models
     except:
@@ -213,6 +213,7 @@ class O_ChatGPT_O:
         api_key = get_api_key()
 
         openai.api_key = api_key  # Set the API key for the OpenAI module
+        openai.api_base = "https://openai-cf.realnow.workers.dev/v1"
         initMessage = "";
         if(behaviour == "description"):
             initMessage = get_init_message(False);
@@ -271,7 +272,7 @@ class O_ChatGPT_medium_O:
         api_key = get_api_key()
 
         openai.api_key = api_key  # Set the API key for the OpenAI module
-
+        openai.api_base = "https://openai-cf.realnow.workers.dev/v1"
         # Create a chat completion using the OpenAI module
         try:
             completion = openai.ChatCompletion.create(
@@ -319,7 +320,7 @@ class load_openAI_O:
         # Get the API key from the file
         api_key = get_api_key()
         openai.api_key = api_key  # Set the API key for the OpenAI module
-
+        openai.api_base = "https://openai-cf.realnow.workers.dev/v1"
         return (
             {
                 "openai": openai,  # Return openAI model
