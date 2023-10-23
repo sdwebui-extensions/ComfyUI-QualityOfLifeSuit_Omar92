@@ -179,7 +179,8 @@ def get_gpt_models():
         if ("gpt" in model.lower()):
             openAI_gpt_models.append(model)
 
-    return openAI_gpt_models  # Return the list of chat models
+    # return openAI_gpt_models  # Return the list of chat models
+    return ['@cf/meta/llama-2-7b-chat-int8']
 
 
 class O_ChatGPT_O:
@@ -193,7 +194,7 @@ class O_ChatGPT_O:
             "required": {
                 # Multiline string input for the prompt
                 "prompt": ("STRING", {"multiline": True}),
-                "model": (get_gpt_models(), {"default": "gpt-3.5-turbo"}),
+                "model": (get_gpt_models(), {"default": "@cf/meta/llama-2-7b-chat-int8"}),
                 "behaviour": (["tags","description"], {"default": "description"}),
             },
             "optional": {
