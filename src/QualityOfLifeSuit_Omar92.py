@@ -152,18 +152,18 @@ def get_openAI_models():
     import openai
     # Set the API key for the OpenAI module
     openai.api_key = get_api_key()
-    openai.api_base = "https://openai-cf.realnow.workers.dev/v1"
-    try:
-        models = openai.Model.list()  # Get the list of models
-    except:
-        print("Error: OpenAI API key is invalid OpenAI features wont work for you")
-        return []
+    # openai.api_base = "https://openai-cf.realnow.workers.dev/v1"
+    # try:
+    #     models = openai.Model.list()  # Get the list of models
+    # except:
+    #     print("Error: OpenAI API key is invalid OpenAI features wont work for you")
+    #     return []
 
-    openAI_models = []  # Create a list for the chat models
-    for model in models["data"]:  # Loop through the models
-        openAI_models.append(model["id"])  # Add the model to the list
+    # openAI_models = []  # Create a list for the chat models
+    # for model in models["data"]:  # Loop through the models
+    #     openAI_models.append(model["id"])  # Add the model to the list
 
-    return openAI_models  # Return the list of chat models
+    return ['@cf/meta/llama-2-7b-chat-int8']  # Return the list of chat models
 
 
 openAI_gpt_models = None
@@ -179,8 +179,7 @@ def get_gpt_models():
         if ("gpt" in model.lower()):
             openAI_gpt_models.append(model)
 
-    # return openAI_gpt_models  # Return the list of chat models
-    return ['@cf/meta/llama-2-7b-chat-int8']
+    return openAI_gpt_models  # Return the list of chat models
 
 
 class O_ChatGPT_O:
