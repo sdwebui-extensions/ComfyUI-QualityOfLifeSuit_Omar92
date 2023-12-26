@@ -101,7 +101,7 @@ def get_api_key():
     return api_key  # Return the API key
 
 
-openAI_models = ['@cf/meta/llama-2-7b-chat-int8']
+openAI_models = ['@cf/meta/llama-2-7b-chat-int8','gpt-3.5-turbo']
 #region chatGPTDefaultInitMessages
 chatGPTDefaultInitMessage_tags = """
 First, some basic Stable Diffusion prompting rules for you to better understand the syntax. The parentheses are there for grouping prompt words together, so that we can set uniform weight to multiple words at the same time. Notice the ":1.2" in (masterpiece, best quality, absurdres:1.2), it means that we set the weight of both "masterpiece" and "best quality" to 1.2. The parentheses can also be used to directly increase weight for single word without adding ":WEIGHT". For example, we can type ((masterpiece)), this will increase the weight of "masterpiece" to 1.21. This basic rule is imperative that any parentheses in a set of prompts have purpose, and so they must not be remove at any case. Conversely, when brackets are used in prompts, it means to decrease the weight of a word. For example, by typing "[bird]", we decrease the weight of the word "bird" by 1.1.
@@ -143,6 +143,9 @@ def get_init_message(isTags=False):
         return chatGPTDefaultInitMessage_description
 
 #endregion chatGPTDefaultInitMessages
+
+openAI_gpt_models = ['@cf/meta/llama-2-7b-chat-int8','gpt-3.5-turbo']
+
 def get_openAI_models():
     global openAI_models
     if (openAI_models != None):
@@ -151,7 +154,7 @@ def get_openAI_models():
     install_openai()
     import openai
     # Set the API key for the OpenAI module
-    openai.api_key = get_api_key()
+    # openai.api_key = get_api_key()
     # openai.api_base = "https://openai-cf.realnow.workers.dev/v1"
     # try:
     #     models = openai.Model.list()  # Get the list of models
@@ -163,10 +166,10 @@ def get_openAI_models():
     # for model in models["data"]:  # Loop through the models
     #     openAI_models.append(model["id"])  # Add the model to the list
 
-    return ['@cf/meta/llama-2-7b-chat-int8']  # Return the list of chat models
+    return openAI_gpt_models  # Return the list of chat models
 
 
-openAI_gpt_models = ['@cf/meta/llama-2-7b-chat-int8']
+
 
 
 def get_gpt_models():
@@ -174,7 +177,7 @@ def get_gpt_models():
     if (openAI_gpt_models != None):
         return openAI_gpt_models
     models = get_openAI_models()
-    openAI_gpt_models = ['@cf/meta/llama-2-7b-chat-int8']  # Create a list for the chat models
+    openAI_gpt_models = openAI_gpt_models  # Create a list for the chat models
     # for model in models:  # Loop through the models
     #     if ("gpt" in model.lower()):
     #         openAI_gpt_models.append(model)
