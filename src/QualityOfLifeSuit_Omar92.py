@@ -307,20 +307,22 @@ class load_openAI_O:
     def INPUT_TYPES(cls):
         return {
             "required": {
+                "base_url": ("STRING", {"multiline": False, "default": "https://openai-cf.realnow.workers.dev/v1"}),
+                "api_key": ("STRING", {"multiline": False, "default": ""}),
             }
         }
     RETURN_TYPES = ("OPENAI",)  # Define the return type of the node
     FUNCTION = "fun"  # Define the function name for the node
     CATEGORY = "O/OpenAI/Advanced"  # Define the category for the node
 
-    def fun(self):
+    def fun(self,base_url,api_key):
         install_openai()  # Install the OpenAI module if not already installed
         import openai  # Import the OpenAI module
 
         # Get the API key from the file
-        api_key = get_api_key()
+        # api_key = get_api_key()
         openai.api_key = api_key  # Set the API key for the OpenAI module
-        openai.api_base = "https://openai-cf.realnow.workers.dev/v1"
+        openai.api_base = base_url
         return (
             {
                 "openai": openai,  # Return openAI model
