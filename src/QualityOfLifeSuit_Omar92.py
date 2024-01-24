@@ -1208,10 +1208,10 @@ class concat_text_O:
                     "text7": ("STRING", {"multiline": False, "default": "", "forceInput": True}),
                     "text8": ("STRING", {"multiline": False, "default": "", "forceInput": True}),
                     "text9": ("STRING", {"multiline": False, "default": "", "forceInput": True}),
-                    "text10": ("STRING", {"multiline": False, "default": "", "forceInput": True}),
-                    "text11": ("STRING", {"multiline": False, "default": "", "forceInput": True}),
-                    "text12": ("STRING", {"multiline": False, "default": "", "forceInput": True}),
-                    "text13": ("STRING", {"multiline": False, "default": "", "forceInput": True}),
+                    "text10": ("STRING", {"multiline": True, "defaultBehavior": "input"}),
+                    "text11": ("STRING", {"multiline": True, "defaultBehavior": "input"}),
+                    "text12": ("STRING", {"multiline": True, "defaultBehavior": "input"}),
+                    "text13": ("STRING", {"multiline": True, "defaultBehavior": "input"}),
                     "separator": ("STRING", {"multiline": False, "default": ","}),
                 }}
 
@@ -1220,8 +1220,9 @@ class concat_text_O:
     CATEGORY = "O/text/operations"
 
     @ staticmethod
-    def fun(*args):
+    def fun(text1="", text2="", text3="", text4="", text5="", text6="", text7="", text8="", text9="", text10="", text11="", text12="", text13="", separator=""):
         # Remove empty strings from the list of arguments
+        args = [text1, text2, text3, text4, text5, text6, text7, text8, text9, text10, text11, text12, text13]
         args = list(filter(None, args))
 
         # If there are no arguments, return an empty string
