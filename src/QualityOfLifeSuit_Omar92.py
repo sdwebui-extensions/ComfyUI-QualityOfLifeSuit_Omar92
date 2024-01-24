@@ -1667,6 +1667,7 @@ NODE_CLASS_MAPPINGS = {
     "RandomNSP _O": RandomNSP_O,
     "ConcatRandomNSP_O": ConcatRandomNSP_O,
     "Concat Text _O": concat_text_O,
+    "QOL Split String": QOL_SplitString,
     "Trim Text _O": trim_text_O,
     "Replace Text _O": replace_text_O,
     "saveTextToFile _O": saveTextToFile_O,
