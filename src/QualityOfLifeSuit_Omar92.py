@@ -1220,7 +1220,7 @@ class concat_text_O:
     CATEGORY = "O/text/operations"
 
     @ staticmethod
-    def fun(text1="", text2="", text3="", text4="", text5="", text6="", text7="", text8="", text9="", text10="", text11="", text12="", text13="", separator=""):
+    def fun(text1, text2, text3, text4, text5, text6, text7, text8, text9, text10, text11, text12, text13, separator):
         # Remove empty strings from the list of arguments
         args = [text1, text2, text3, text4, text5, text6, text7, text8, text9, text10, text11, text12, text13]
         args = list(filter(None, args))
@@ -1641,7 +1641,7 @@ class QOL_SplitString:
         string_1, string_2, string_3, string_4,string_5, string_6, string_7, string_8,string_9, string_10, string_11, string_12,string_13 = strings + [""] * (13 - len(strings))            
 
 
-        return (string_1, string_2, string_3, string_4, string_1, string_2, string_3, string_4,string_5, string_6, string_7, string_8,string_9, string_10, string_11, string_12,string_13 )
+        return (string_1, string_2, string_3, string_4,string_5, string_6, string_7, string_8,string_9, string_10, string_11, string_12,string_13 )
 
 
 # Define the node class mappings
