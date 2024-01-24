@@ -144,7 +144,7 @@ def get_init_message(isTags=False):
 
 #endregion chatGPTDefaultInitMessages
 
-openAI_gpt_models = ['@cf/meta/llama-2-7b-chat-int8','gpt-3.5-turbo']
+openAI_gpt_models = ['@cf/meta/llama-2-7b-chat-int8', 'gpt-3.5-turbo']
 
 def get_openAI_models():
     global openAI_models
@@ -1191,26 +1191,46 @@ class DebugTextRoute_O:
 
 # region text/operations
 
-
 class concat_text_O:
     """
     This node will concatenate two strings together
     """
     @ classmethod
     def INPUT_TYPES(cls):
-        return {"required": {
-            "text1": ("STRING", {"multiline": True, "defaultBehavior": "input"}),
-            "text2": ("STRING", {"multiline": True, "defaultBehavior": "input"}),
-            "separator": ("STRING", {"multiline": False, "default": ","}),
-        }}
+        return {"required": {},
+                "optional": {
+                    "text1": ("STRING", {"multiline": True, "defaultBehavior": "input"}),
+                    "text2": ("STRING", {"multiline": True, "defaultBehavior": "input"}),
+                    "text3": ("STRING", {"multiline": True, "defaultBehavior": "input"}),
+                    "text4": ("STRING", {"multiline": True, "defaultBehavior": "input"}),
+                    "text5": ("STRING", {"multiline": True, "defaultBehavior": "input"}),
+                    "text6": ("STRING", {"multiline": True, "defaultBehavior": "input"}),
+                    "text7": ("STRING", {"multiline": True, "defaultBehavior": "input"}),
+                    "text8": ("STRING", {"multiline": True, "defaultBehavior": "input"}),
+                    "text9": ("STRING", {"multiline": True, "defaultBehavior": "input"}),
+                    "text10": ("STRING", {"multiline": True, "defaultBehavior": "input"}),
+                    "text11": ("STRING", {"multiline": True, "defaultBehavior": "input"}),
+                    "text12": ("STRING", {"multiline": True, "defaultBehavior": "input"}),
+                    "text13": ("STRING", {"multiline": True, "defaultBehavior": "input"}),
+                    "separator": ("STRING", {"multiline": False, "default": ","}),
+                }}
 
     RETURN_TYPES = ("STRING",)
     FUNCTION = "fun"
     CATEGORY = "O/text/operations"
 
     @ staticmethod
-    def fun(text1, separator, text2):
-        return (text1 + separator + text2,)
+    def fun(*args):
+        # Remove empty strings from the list of arguments
+        args = list(filter(None, args))
+
+        # If there are no arguments, return an empty string
+        if not args:
+            return ""
+
+        # Join the arguments with the separator
+        return separator.join(args[:-1]) + args[-1]
+
 
 
 class trim_text_O:
@@ -1589,6 +1609,38 @@ class Note_O:
     def fun(self, text):
         return ()
 # endregion
+
+
+#---------------------------------------------------------------------------------------------------------------------#
+# Text Util Nodes
+#---------------------------------------------------------------------------------------------------------------------#
+class QOL_SplitString:
+
+    @classmethod
+    def INPUT_TYPES(s):  
+    
+        return {"required": {
+                    "text": ("STRING", {"multiline": False, "default": "text"}),
+                },
+                "optional": {
+                    "delimiter": ("STRING", {"multiline": False, "default": ","}),
+                }            
+        }
+
+    RETURN_TYPES = ("STRING", "STRING", "STRING", "STRING", "STRING","STRING", "STRING", "STRING", "STRING", "STRING","STRING", "STRING", "STRING")
+    RETURN_NAMES = ("string_1", "string_2", "string_3", "string_4", "string_5","string_6","string_7","string_8","string_9","string_10","string_11","string_12","string_13")    
+    FUNCTION = "split"
+    CATEGORY = "O/text/operations"
+
+    def split(self, text, delimiter=""):
+
+        # Split the text string
+        parts = text.split(delimiter)
+        strings = [part.strip() for part in parts[:13]]
+        string_1, string_2, string_3, string_4,string_5, string_6, string_7, string_8,string_9, string_10, string_11, string_12,string_13 = strings + [""] * (13 - len(strings))            
+
+
+        return (string_1, string_2, string_3, string_4, string_1, string_2, string_3, string_4,string_5, string_6, string_7, string_8,string_9, string_10, string_11, string_12,string_13 )
 
 
 # Define the node class mappings
