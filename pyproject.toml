@@ -9,6 +9,6 @@ Repository = "https://github.com/omar92/ComfyUI-QualityOfLifeSuit_Omar92"
 #  Used by Comfy Registry https://comfyregistry.org
 
 [tool.comfy]
-PublisherId = ""
+PublisherId = "5e25c85f-0b5a-47c3-b013-e1c6afe81fed"
 DisplayName = "ComfyUI-QualityOfLifeSuit_Omar92"
 Icon = ""
