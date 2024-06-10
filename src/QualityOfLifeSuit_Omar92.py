@@ -324,7 +324,7 @@ class load_openAI_O:
                 "api_key": ("STRING", {"multiline": False, "default": ""}),
             }
         }
-    RETURN_TYPES = ("CLIENT",)  # Define the return type of the node
+    RETURN_TYPES = ("OPENAI",)  # Define the return type of the node
     FUNCTION = "fun"  # Define the function name for the node
     CATEGORY = "O/OpenAI/Advanced"  # Define the category for the node
 
@@ -341,7 +341,7 @@ class load_openAI_O:
         
         return (
             {
-                "client": client,  # Return openAI model
+                "OPENAI": client,  # Return openAI model
             },
         )
 # region ChatGPT
@@ -413,7 +413,7 @@ class openAi_chat_completion_O:
     def INPUT_TYPES(cls):
         return {
             "required": {
-                "client": ("CLIENT", ),
+                "openai": ("OPENAI", ),
                 # "model": ("STRING", {"multiline": False, "default": "gpt-3.5-turbo"}),
                 "model": (get_gpt_models(), {"default": "gpt-3.5-turbo"}),
                 "messages": ("OPENAI_CHAT_MESSAGES", ),
