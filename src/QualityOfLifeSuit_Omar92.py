@@ -429,9 +429,9 @@ class openAi_chat_completion_O:
     # Define the category for the node
     CATEGORY = "O/OpenAI/Advanced/ChatGPT"
 
-    def fun(self, client, model, messages, seed):
+    def fun(self, openai, model, messages, seed):
         # Create a chat completion using the OpenAI module
-        client = client["client"]
+        client = client["openai"]
         try:
             completion = client.chat.completions.create(
                 model=model,
