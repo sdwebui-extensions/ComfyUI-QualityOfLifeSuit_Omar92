@@ -431,7 +431,7 @@ class openAi_chat_completion_O:
 
     def fun(self, openai, model, messages, seed):
         # Create a chat completion using the OpenAI module
-        client = openai
+        client = openai['client']
         try:
             completion = client.chat.completions.create(
                 model=model,
