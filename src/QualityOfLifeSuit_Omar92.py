@@ -341,7 +341,7 @@ class load_openAI_O:
         
         return (
             {
-                "OPENAI": client,  # Return openAI model
+                "client": client,  # Return openAI model
             },
         )
 # region ChatGPT
@@ -429,9 +429,9 @@ class openAi_chat_completion_O:
     # Define the category for the node
     CATEGORY = "O/OpenAI/Advanced/ChatGPT"
 
-    def fun(self, openai, model, messages, seed):
+    def fun(self,client, model, messages, seed):
         # Create a chat completion using the OpenAI module
-        client = openai["client"]
+        client = client["client"]
         try:
             completion = client.chat.completions.create(
                 model=model,
