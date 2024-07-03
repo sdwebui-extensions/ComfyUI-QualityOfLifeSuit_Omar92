@@ -413,7 +413,7 @@ class openAi_chat_completion_O:
     def INPUT_TYPES(cls):
         return {
             "required": {
-                "openai": ("CLIENT", ),
+                "client": ("CLIENT", ),
                 # "model": ("STRING", {"multiline": False, "default": "gpt-3.5-turbo"}),
                 "model": (get_gpt_models(), {"default": "gpt-3.5-turbo"}),
                 "messages": ("OPENAI_CHAT_MESSAGES", ),
