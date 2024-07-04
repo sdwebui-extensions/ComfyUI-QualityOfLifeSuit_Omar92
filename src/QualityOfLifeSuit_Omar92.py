@@ -178,6 +178,7 @@ def get_gpt_models():
     global openAI_gpt_models
     if (openAI_gpt_models != None):
         return openAI_gpt_models
+    return ["gpt-3.5-turbo"]
     models = get_openAI_models()
     openAI_gpt_models = ["gpt-3.5-turbo"]  # Create a list for the chat models
     for model in models:  # Loop through the models
