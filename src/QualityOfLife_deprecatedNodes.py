@@ -20,6 +20,7 @@ import importlib
 import comfy.samplers
 import comfy.sd
 import comfy.utils
+import folder_paths
 
 # -------------------------------------------------------------------------------------------
 # region deprecated
@@ -354,7 +355,11 @@ class string2Image_deprecated:
 
     def create_image(self, string, font, size, font_R, font_G, font_B, background_R, background_G, background_B):
         font_color = (font_R, font_G, font_B)
-        font = ImageFont.truetype(self.font_filepath+"\\"+font, size)
+        font_path = os.path.join(self.font_filepath, font)
+        if not os.path.exists(font_path):
+            if font in folder_paths.get_filename_list("fonts"):
+                font_path = folder_paths.get_full_path("fonts", font)
+        font = ImageFont.truetype(font_path, size)
         mask_image = font.getmask(string["string"], "L")
         image = Image.new("RGBA", mask_image.size,
                           (background_R, background_G, background_B))

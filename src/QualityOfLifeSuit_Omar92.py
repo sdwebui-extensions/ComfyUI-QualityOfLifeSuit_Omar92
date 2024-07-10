@@ -17,6 +17,7 @@ import comfy.samplers
 import comfy.sd
 import comfy.utils
 import torch.nn as nn
+import folder_paths
 
 MAX_RESOLUTION = 8192
 
@@ -956,6 +957,9 @@ def loadFonts():
         for file in os.listdir(fonts_filepath):
             if file.endswith(".ttf") or file.endswith(".otf") or file.endswith(".ttc") or file.endswith(".TTF") or file.endswith(".OTF") or file.endswith(".TTC"):
                 fonts.append(file)
+        for file in folder_paths.get_filename_list("fonts"):
+            if file not in fonts:
+                fonts.append(file)
     except:
         fonts = []
 
@@ -1007,6 +1011,9 @@ class Text2Image_O:
                             background_B, background_A)
 
         font_path = os.path.join(self.font_filepath, font)
+        if not os.path.exists(font_path):
+            if font in folder_paths.get_filename_list("fonts"):
+                font_path = folder_paths.get_full_path("fonts", font)
         font = ImageFont.truetype(font_path, size)
 
         # Initialize the drawing context
