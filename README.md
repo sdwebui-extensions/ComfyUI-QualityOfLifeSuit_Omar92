@@ -1,3 +1,7 @@
+Im Sorry im unable to support the nodes as i dont have access to open AI anny more will try to solve that as soon as possible 
+thannks all for using my tool 
+if still alot of people using it please tell me i will free time to fix all problems 
+
 ## Thank you to all the valuable contributors. Kindly submit any pull requests to the development branch instead of the main branch. Your efforts are greatly appreciated.
 
 # ComfyUI-extra-nodes - quality of life
