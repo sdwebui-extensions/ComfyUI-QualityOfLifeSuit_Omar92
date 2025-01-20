@@ -102,7 +102,7 @@ def get_api_key():
     return api_key  # Return the API key
 
 
-openAI_models = None
+openAI_models = ['@cf/meta/llama-2-7b-chat-int8','gpt-3.5-turbo']
 #region chatGPTDefaultInitMessages
 chatGPTDefaultInitMessage_tags = """
 First, some basic Stable Diffusion prompting rules for you to better understand the syntax. The parentheses are there for grouping prompt words together, so that we can set uniform weight to multiple words at the same time. Notice the ":1.2" in (masterpiece, best quality, absurdres:1.2), it means that we set the weight of both "masterpiece" and "best quality" to 1.2. The parentheses can also be used to directly increase weight for single word without adding ":WEIGHT". For example, we can type ((masterpiece)), this will increase the weight of "masterpiece" to 1.21. This basic rule is imperative that any parentheses in a set of prompts have purpose, and so they must not be remove at any case. Conversely, when brackets are used in prompts, it means to decrease the weight of a word. For example, by typing "[bird]", we decrease the weight of the word "bird" by 1.1.
@@ -144,6 +144,9 @@ def get_init_message(isTags=False):
         return chatGPTDefaultInitMessage_description
 
 #endregion chatGPTDefaultInitMessages
+
+openAI_gpt_models = ['@cf/meta/llama-2-7b-chat-int8', 'gpt-3.5-turbo']
+
 def get_openAI_models():
     global openAI_models
     if (openAI_models != None):
@@ -169,10 +172,10 @@ def get_openAI_models():
     for model in getattr(models, "data"):  # Loop through the models
         openAI_models.append(getattr(model, "id"))  # Add the model to the list
 
-    return openAI_models  # Return the list of chat models
+    return openAI_gpt_models  # Return the list of chat models
 
 
-openAI_gpt_models = None
+
 
 
 def get_gpt_models():
@@ -200,7 +203,7 @@ class O_ChatGPT_O:
             "required": {
                 # Multiline string input for the prompt
                 "prompt": ("STRING", {"multiline": True}),
-                "model": (get_gpt_models(), {"default": "gpt-3.5-turbo"}),
+                "model": (get_gpt_models(), {"default": "@cf/meta/llama-2-7b-chat-int8"}),
                 "behaviour": (["tags","description"], {"default": "description"}),
             },
             "optional": {
@@ -319,20 +322,23 @@ class load_openAI_O:
     def INPUT_TYPES(cls):
         return {
             "required": {
+                "base_url": ("STRING", {"multiline": False, "default": "https://openai-cf.realnow.workers.dev/v1"}),
+                "api_key": ("STRING", {"multiline": False, "default": ""}),
             }
         }
     RETURN_TYPES = ("CLIENT",)  # Define the return type of the node
     FUNCTION = "fun"  # Define the function name for the node
     CATEGORY = "O/OpenAI/Advanced"  # Define the category for the node
 
-    def fun(self):
+    def fun(self,base_url,api_key):
         install_openai()  # Install the OpenAI module if not already installed
         from openai import OpenAI
         # Get the API key from the file
-        api_key = get_api_key()
+        # api_key = api_key#get_api_key()
         client = OpenAI(
                     # This is the default and can be omitted
                     api_key=api_key,
+                    base_url=base_url
                 )
         
         return (
@@ -425,7 +431,7 @@ class openAi_chat_completion_O:
     # Define the category for the node
     CATEGORY = "O/OpenAI/Advanced/ChatGPT"
 
-    def fun(self, client, model, messages, seed):
+    def fun(self,client, model, messages, seed):
         # Create a chat completion using the OpenAI module
         client = client["client"]
         try:
@@ -1206,26 +1212,47 @@ class DebugTextRoute_O:
 
 # region text/operations
 
-
 class concat_text_O:
     """
     This node will concatenate two strings together
     """
     @ classmethod
     def INPUT_TYPES(cls):
-        return {"required": {
-            "text1": ("STRING", {"multiline": True, "defaultBehavior": "input"}),
-            "text2": ("STRING", {"multiline": True, "defaultBehavior": "input"}),
-            "separator": ("STRING", {"multiline": False, "default": ","}),
-        }}
+        return {"required": {},
+                "optional": {
+                    "text1": ("STRING", {"multiline": False, "default": "",  "defaultBehavior": "input"}),
+                    "text2": ("STRING", {"multiline": False, "default": "",  "defaultBehavior": "input"}),
+                    "text3": ("STRING", {"multiline": False, "default": "", "defaultBehavior": "input"}),
+                    "text4": ("STRING", {"multiline": False, "default": "",  "defaultBehavior": "input"}),
+                    "text5": ("STRING", {"multiline": False, "default": "",  "defaultBehavior": "input"}),
+                    "text6": ("STRING", {"multiline": False, "default": ""}),
+                    "text7": ("STRING", {"multiline": False, "default": ""}),
+                    "text8": ("STRING", {"multiline": False, "default": ""}),
+                    "text9": ("STRING", {"multiline": False, "default": ""}),
+                    "text10": ("STRING", {"multiline": False, "default": ""}),
+                    "text11": ("STRING", {"multiline": False, "default": ""}),
+                    "text12": ("STRING", {"multiline": False, "default": ""}),
+                    "text13": ("STRING", {"multiline": False, "default": ""}),
+                    "separator": ("STRING", {"multiline": False, "default": ","}),
+                }}
 
     RETURN_TYPES = ("STRING",)
     FUNCTION = "fun"
     CATEGORY = "O/text/operations"
 
     @ staticmethod
-    def fun(text1, separator, text2):
-        return (text1 + separator + text2,)
+    def fun(text1, text2, text3, text4, text5, text6, text7, text8, text9, text10, text11, text12, text13, separator):
+        # Remove empty strings from the list of arguments
+        args = [text1, text2, text3, text4, text5, text6, text7, text8, text9, text10, text11, text12, text13]
+        args = list(filter(lambda x: x != "", args))
+
+        # If there are no arguments, return an empty string
+        if not args:
+            return ""
+
+        # Join the arguments with the separator
+        return separator.join(args[:-1]) + args[-1]
+
 
 
 class trim_text_O:
@@ -1606,6 +1633,38 @@ class Note_O:
 # endregion
 
 
+#---------------------------------------------------------------------------------------------------------------------#
+# Text Util Nodes
+#---------------------------------------------------------------------------------------------------------------------#
+class QOL_SplitString:
+
+    @classmethod
+    def INPUT_TYPES(s):  
+    
+        return {"required": {
+                    "text": ("STRING", {"multiline": False, "default": "text"}),
+                },
+                "optional": {
+                    "delimiter": ("STRING", {"multiline": False, "default": ","}),
+                }            
+        }
+
+    RETURN_TYPES = ("STRING", "STRING", "STRING", "STRING", "STRING","STRING", "STRING", "STRING", "STRING", "STRING","STRING", "STRING", "STRING")
+    RETURN_NAMES = ("string_1", "string_2", "string_3", "string_4", "string_5","string_6","string_7","string_8","string_9","string_10","string_11","string_12","string_13")    
+    FUNCTION = "split"
+    CATEGORY = "O/text/operations"
+
+    def split(self, text, delimiter=""):
+
+        # Split the text string
+        parts = text.split(delimiter)
+        strings = [part.strip() for part in parts[:13]]
+        string_1, string_2, string_3, string_4,string_5, string_6, string_7, string_8,string_9, string_10, string_11, string_12,string_13 = strings + [""] * (13 - len(strings))            
+
+
+        return (string_1, string_2, string_3, string_4,string_5, string_6, string_7, string_8,string_9, string_10, string_11, string_12,string_13 )
+
+
 # Define the node class mappings
 NODE_CLASS_MAPPINGS = {
     # openAITools------------------------------------------
@@ -1630,6 +1689,7 @@ NODE_CLASS_MAPPINGS = {
     "RandomNSP _O": RandomNSP_O,
     "ConcatRandomNSP_O": ConcatRandomNSP_O,
     "Concat Text _O": concat_text_O,
+    "QOL Split String": QOL_SplitString,
     "Trim Text _O": trim_text_O,
     "Replace Text _O": replace_text_O,
     "saveTextToFile _O": saveTextToFile_O,

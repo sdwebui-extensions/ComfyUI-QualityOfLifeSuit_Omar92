@@ -1,3 +1,5 @@
+Kindly tell me if the problems are fixed now 
+
 ## Thank you to all the valuable contributors. Kindly submit any pull requests to the development branch instead of the main branch. Your efforts are greatly appreciated.
 
 # ComfyUI-extra-nodes - quality of life

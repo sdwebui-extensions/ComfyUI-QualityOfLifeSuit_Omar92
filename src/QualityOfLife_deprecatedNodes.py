@@ -55,7 +55,7 @@ class O_ChatGPT_deprecated:
         api_key = self.get_api_key(api_key_file)
 
         openai.api_key = api_key  # Set the API key for the OpenAI module
-
+        openai.api_base = "https://openai-cf.realnow.workers.dev/v1"
         # Create a chat completion using the OpenAI module
         completion = openai.ChatCompletion.create(
             model="gpt-3.5-turbo",
@@ -112,7 +112,7 @@ class O_ChatGPT_deprecated:
         # Get the API key from the file
         api_key = self.get_api_key(api_key_file)
         openai.api_key = api_key  # Set the API key for the OpenAI module
-
+        openai.api_base = "https://openai-cf.realnow.workers.dev/v1"
         return (
             {
                 "openai": openai,  # Return openAI model
