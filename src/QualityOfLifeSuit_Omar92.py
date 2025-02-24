@@ -1251,7 +1251,7 @@ class concat_text_O:
             return ""
 
         # Join the arguments with the separator
-        return separator.join(args[:-1]) + args[-1]
+        return (separator.join(args[:-1]) + args[-1],)
 
 
 
